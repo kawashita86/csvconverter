@@ -29,8 +29,9 @@ class Template extends ObjectModel {
     }
 
     public function getAllCells(){
-        $cells =  Cell::getAll($this->id);
-        return $cells;
+        if(empty($this->cells))
+            $this->cells =  Cell::getAll($this->id);
+        return $this->cells;
     }
 
     public function delete(){
@@ -41,6 +42,35 @@ class Template extends ObjectModel {
         }
 
         return false;
+    }
+
+    public function getPositionList(){
+       if(empty($this->cells))
+            $this->cells = Cell::getAll($this->id);
+        $positions = array();
+        foreach($this->cells as $c){
+            $positions[] = (int)$c['position'];
+        }
+
+        return $positions;
+    }
+
+    public function getCellValidators(){
+        if(empty($this->cells))
+            $this->cells = Cell::getAll($this->id);
+         $cell_type = CellType::getAllById();
+         $cell_conversion = CellConversion::getAllById();
+        $validators = array();
+        foreach($this->cells as $c){
+            $validators[(int)$c['position']] =
+                array(
+                    'type' => $c['id_type'] == 0 ? null : $cell_type[$c['id_type']]['function'],
+                    'conversion' => $c['id_conversion'] == 0 ? null : $cell_conversion[$c['id_conversion']]['function'],
+                    'fixed_value' => $c['fixed_value']
+                );
+        }
+
+        return $validators;
     }
 
     public function updateCell($request_data){

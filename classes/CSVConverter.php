@@ -24,6 +24,20 @@ class CSVConverter
 
     }
 
+    public static function getValidatedRow($row, $validators){
+        foreach($validators as $key => $validator){
+           if($validator['type'] != null) {
+               $row[$key] = CSVConverter::$validator['type']($row[$key]);
+           }
+           if($validator['conversion'] != null) {
+               $row[$key] = CSVConverter::$validator['conversion']($row[$key]);
+           }
+        }
+
+        return $row;
+    }
+
+
     private function loadSettings(){
         $this->separator = Configuration::get('CSV_SEPARATOR');
         $this->skip = (int)Configuration::get('CSV_SKIP');
@@ -69,6 +83,36 @@ class CSVConverter
         $field = ((float)str_replace(',', '.', $field));
         $field = ((float)str_replace('%', '', $field));
         return $field;
+    }
+
+    protected static function getText($field){
+        return $field;
+    }
+
+    protected static function getNumber($field)
+    {
+        $field = ((float)str_replace(',', '.', $field));
+        $field = ((float)str_replace('%', '', $field));
+        return $field;
+    }
+
+    protected static function getHTML($field)
+    {
+        return $field;
+    }
+
+    protected static function getFixedValue($field)
+    {
+        $field = 1;
+        return $field;
+    }
+
+    protected static function forceInteger($field){
+        return (int)ceil($field);
+    }
+
+    protected static function stripHtml($field){
+        return strip_tags($field);
     }
 
     public static function getMaskedRow($row)

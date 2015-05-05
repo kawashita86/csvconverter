@@ -26,4 +26,14 @@ class CellConversion extends ObjectModel {
 
     }
 
+    public static function getAllById(){
+        $res = Db::getInstance()->executeS('SELECT * FROM cell_conversions');
+        $array_to_return = array();
+        if(!$res) return array();
+        foreach($res as $r){
+            $array_to_return[(int)$r['id_cell_conversion']] = $r;
+        }
+        return $array_to_return;
+    }
+
 }

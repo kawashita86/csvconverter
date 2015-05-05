@@ -25,4 +25,14 @@ class CellType extends  ObjectModel {
         //query to get all
         return Db::getInstance()->executeS('SELECT * FROM cell_types');
     }
+
+    public static function getAllById(){
+        $res = Db::getInstance()->executeS('SELECT * FROM cell_types');
+        $array_to_return = array();
+        if(!$res) return array();
+        foreach($res as $r){
+            $array_to_return[(int)$r['id_cell_type']] = $r;
+        }
+        return $array_to_return;
+    }
 }
