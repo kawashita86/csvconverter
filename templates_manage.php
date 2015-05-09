@@ -36,7 +36,14 @@ include_once('header.php');
                 <div class="form-group">
                     <label for="separator" class="col-md-2 control-label">Separatore</label>
                     <div class="col-md-10">
-                        <input type="text" value="<?php if(isset($template)){ echo $template->separator; } ?>" class="form-control" id="separator" name="separator" required />
+                        <select class="form-control" id="separator" name="separator" required >
+                            <option value="">Scegli</option>
+                            <option value="," <?php echo (isset($template) && $template->separator == ',')? 'selected' : ''; ?>>,</option>
+                            <option value=";" <?php echo (isset($template) && $template->separator == ';')? 'selected' : ''; ?>>;</option>
+                            <option value="t" <?php echo (isset($template) && $template->separator == 't')? 'selected' : ''; ?>>Tab</option>
+                            <option value="|" <?php echo (isset($template) && $template->separator == '|')? 'selected' : ''; ?>>|</option>
+                            <option value="-" <?php echo (isset($template) && $template->separator == '-')? 'selected' : ''; ?>>-</option>
+                        </select>
                         <p class="help-block">valore che separa i singoli campi del csv ( "|", ",", ... ).</p>
                     </div>
                 </div>
@@ -44,8 +51,8 @@ include_once('header.php');
                     <label for="heading_lines" class="col-md-2 control-label">Linee Intestazione</label>
                     <div class="col-md-10">
                         <select class="form-control" id="heading_lines" name="heading_lines" required>
-                            <option value="0" <?php if(isset($template) && $template->line_header == 0){ echo 'checked'; } ?>>0</option>
-                            <option value="1" <?php if(isset($template) && $template->line_header == 1){ echo 'checked'; } ?>>1</option>
+                            <option value="0" <?php if(isset($template) && $template->line_header == 0){ echo 'selected'; } ?>>0</option>
+                            <option value="1" <?php if(isset($template) && $template->line_header == 1){ echo 'selected'; } ?>>1</option>
                         </select>
                         <p class="help-block">numero di righe che compongono l'intestazione del csv.</p>
                     </div>
@@ -53,13 +60,29 @@ include_once('header.php');
                 <div class="form-group">
                     <label for="text_container" class="col-md-2 control-label">Contenitore testo</label>
                     <div class="col-md-10">
-                        <input type="text" value="<?php if(isset($template)){ echo $template->text_container; } ?>" class="form-control" id="text_container" name="text_container" />
+                        <select class="form-control" id="text_container" name="text_container" >
+                            <option value="n" <?php echo (isset($template) && $template->text_container == "n")? 'selected' : ''; ?>>Nessuno</option>
+                            <option value='"' <?php echo (isset($template) && $template->text_container == '"')? 'selected' : ''; ?>>"</option>
+                            <option value="'" <?php echo (isset($template) && $template->text_container == "'")? 'selected' : ''; ?>>'</option>
+                        </select>
                         <p class="help-block">Se ogni elemento testuale è contenuto in particolari tag es. ("", '') .</p>
                     </div>
                 </div>
+                    <div class="form-group">
+                        <label for="text_container" class="col-md-2 control-label">Carattere concatenzione</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="concatenation_char" name="concatenation_char" >
+                                <option value="n" <?php echo (isset($template) && $template->concatenation_char == "n")? 'selected' : ''; ?>>Nessuno</option>
+                                <option value='¶' <?php echo (isset($template) && $template->concatenation_char == '¶')? 'selected' : ''; ?>>¶</option>
+                                <option value="-" <?php echo (isset($template) && $template->concatenation_char == "-")? 'selected' : ''; ?>>-</option>
+                                <option value="~" <?php echo (isset($template) && $template->concatenation_char == "~")? 'selected' : ''; ?>>~</option>
+                            </select>
+                            <p class="help-block">Se desideri concatenare colonne del csv questo è il carattere che verrà utilizzato nell'unione .</p>
+                        </div>
+                    </div>
                </fieldset>
-               <fieldset class="scheduler-border">
-                    <legend class="scheduler-border">Dettagli Celle</legend>
+               <fieldset class="entries-border">
+                    <legend >Dettagli Celle</legend>
                 <?php if(isset($cell_made) && count($cell_made) > 0) {
                     foreach ($cell_made as $c) {
                         ?>
@@ -71,7 +94,7 @@ include_once('header.php');
 
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" placeholder="Name"
-                                               name="cell_name[]" value="<?php echo $c['name'] ?>">
+                                               name="cell_name[]" value="<?php echo stripslashes($c['name']) ?>">
                                     </div>
                                     <label for="cell_position[]" class="col-md-1 control-label">Posizione</label>
 
@@ -89,25 +112,26 @@ include_once('header.php');
                                             ?>
                                         </select>
                                     </div>
-                                    <label for="special_conversion[]" class="col-md-1 control-label">
-                                        <span class="hide-conversion" <?php echo $c['id_type'] == 5 ? 'style="display:none"': '' ?>>Conversione</span>
-                                        <span class="hide-fixed" <?php echo $c['id_type'] != 5 ? 'style="display:none"': '' ?>>Val. fisso</span>
-                                    </label>
-
                                     <div class="col-md-2">
-                                       <span class="hide-conversion" <?php echo $c['id_type'] == 5 ? 'style="display:none"': '' ?>>
-                                        <select class="form-control" name="special_conversion[]">
+                                       <span class="hide-conversion" <?php echo $c['id_type'] == 5 || $c['id_type'] == 6  ? 'style="display:none"': '' ?>>
+                                     <!--   <select class="form-control" name="special_conversion[]">
                                             <option value=""> - Scegli</option>
-                                            <?php foreach ($cell_conversion as $type)
-                                                echo '<option value="' . $type['id_cell_conversion'] . '" ' . ($c['id_conversion'] == $type['id_cell_conversion'] ? 'selected' : '') . '>' . $type['name'] . '</option>';
+                                            <?php //foreach ($cell_conversion as $type)
+                                             //   echo '<option value="' . $type['id_cell_conversion'] . '" ' . ($c['id_conversion'] == $type['id_cell_conversion'] ? 'selected' : '') . '>' . $type['name'] . '</option>';
                                             ?>
-                                        </select>
+                                        </select>-->
                                         </span>
-                                        <span class="hide-fixed" <?php echo $c['id_type'] != 5 ? 'style="display:none"': '' ?>>
+                                        <span class="hide-fixed" <?php echo $c['id_type'] != 5 && $c['id_type'] != 6 ? 'style="display:none"': '' ?>>
                                             <input type="text" value="<?php echo $c['fixed_value'] ?>" name="special_value[]" class="form-control" placeholder="Inserisci valore" />
                                         </span>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
+                                        <button class="btn btn-info btn-up" type="button">
+                                            <span class="glyphicon glyphicon-arrow-up"></span>
+                                        </button>
+                                        <button class="btn btn-info btn-down" type="button">
+                                            <span class="glyphicon glyphicon-arrow-down"></span>
+                                        </button>
                                         <button class="btn btn-danger btn-remove" type="button">
                                             <span class="glyphicon glyphicon-minus"></span>
                                         </button>
@@ -133,31 +157,33 @@ include_once('header.php');
                             </div>
                             <label for="cell_formatting[]" class="col-md-1 control-label">Tipo</label>
                             <div class="col-md-2">
-                                <select class="form-control" name="cell_formatting[]" required>
+                                <select class="form-control" name="cell_formatting[]" >
                                     <option value=""> - Scegli </option>
                                     <?php foreach($cell_type as $type)
                                         echo '<option value="'.$type['id_cell_type'].'">'.$type['name'].'</option>';
                                     ?>
                                 </select>
                             </div>
-                            <label for="special_conversion[]" class="col-md-1 control-label">
-                               <span class="hide-conversion">Conversione</span>
-                               <span class="hide-fixed" style="display:none">Val. fisso</span>
-                            </label>
                             <div class="col-md-2">
                                 <span class="hide-conversion">
-                                    <select class="form-control" name="special_conversion[]">
+                                  <!--  <select class="form-control" name="special_conversion[]">
                                     <option value=""> - Scegli</option>
-                                    <?php foreach($cell_conversion as $type)
-                                        echo '<option value="'.$type['id_cell_conversion'].'">'.$type['name'].'</option>';
+                                    <?php //foreach($cell_conversion as $type)
+                                       // echo '<option value="'.$type['id_cell_conversion'].'">'.$type['name'].'</option>';
                                     ?>
-                                    </select>
+                                    </select>-->
                                 </span>
                                 <span class="hide-fixed" style="display:none">
                                     <input type="text" value="" name="special_value[]" class="form-control" placeholder="Inserisci valore" />
                                 </span>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
+                                <button class="btn btn-info btn-up" type="button">
+                                    <span class="glyphicon glyphicon-arrow-up"></span>
+                                </button>
+                                <button class="btn btn-info btn-down" type="button">
+                                    <span class="glyphicon glyphicon-arrow-down"></span>
+                                </button>
                                 <button class="btn btn-success btn-add" type="button">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>

@@ -6,10 +6,11 @@ if(Tools::getValue('submitTemplate')){
     if(Tools::getValue('id_template')){
         $template = new Template((int)Tools::getValue('id_template'));
         $template->name = Tools::getValue('template_name');
-        $template->description = '';
+        $template->description = Tools::getValue('template_description');
         $template->line_header = (int)Tools::getValue('heading_lines');
         $template->separator = Tools::getValue('separator');
         $template->text_container = Tools::getValue('text_container');
+        $template->concatenation_char = Tools::getValue('concatenation_char');
         if($template->update())
             $template->updateCell($_POST);
         else
@@ -17,10 +18,11 @@ if(Tools::getValue('submitTemplate')){
     } else {
         $template = new Template();
         $template->name = Tools::getValue('template_name');
-        $template->description = '';
+        $template->description = strip_tags(Tools::getValue('template_description'));
         $template->line_header = (int)Tools::getValue('heading_lines');
         $template->separator = Tools::getValue('separator');
         $template->text_container = Tools::getValue('text_container');
+        $template->concatenation_char = Tools::getValue('concatenation_char');
         if($template->add())
             $template->updateCell($_POST);
         else

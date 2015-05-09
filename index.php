@@ -19,18 +19,18 @@ include_once('header.php');
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="glyphicon glyphicon-bullhorn fa-3x"></i>
+                            <i class="glyphicon glyphicon-list fa-3x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge"><?php echo count($templates) ?></div>
-                            <div>Templates</div>
+                            <div>Gestisci Templates</div>
                         </div>
                     </div>
                 </div>
                 <a href="templates.php">
                     <div class="panel-footer">
                         <span class="pull-left">Vai alla pagina</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
 
                         <div class="clearfix"></div>
                     </div>
@@ -38,11 +38,11 @@ include_once('header.php');
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-info">
+            <div class="panel panel-success">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="glyphicon glyphicon-list fa-3x"></i>
+                            <i class="glyphicon glyphicon-bullhorn fa-3x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">&nbsp;</div>
@@ -53,7 +53,7 @@ include_once('header.php');
                 <a href="conversion.php">
                     <div class="panel-footer">
                         <span class="pull-left">Vai alla pagina</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
 
                         <div class="clearfix"></div>
                     </div>
@@ -61,22 +61,22 @@ include_once('header.php');
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-success">
+            <div class="panel panel-warning">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="glyphicon glyphicon-list fa-3x"></i>
+                            <i class="glyphicon glyphicon-cog fa-3x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">{{$photoalbum}}</div>
-                            <div>{{ trans("admin/admin.photo_albums") }}!</div>
+                            <div class="huge">&nbsp;</div>
+                            <div>Impostazioni</div>
                         </div>
                     </div>
                 </div>
-                <a href="{{URL::to('admin/photoalbum')}}">
+                <a href="impostazioni.php">
                     <div class="panel-footer">
-                        <span class="pull-left">{{ trans("admin/admin.view_detail") }}</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-left">Vai alla pagina</span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
 
                         <div class="clearfix"></div>
                     </div>
@@ -84,22 +84,22 @@ include_once('header.php');
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-success">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="glyphicon glyphicon-camera fa-3x"></i>
+                            <i class="glyphicon glyphicon-book fa-3x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">{{$photo}}</div>
-                            <div>{{ trans("admin/admin.photo_items") }}!</div>
+                            <div class="huge">&nbsp;</div>
+                            <div>Istruzioni</div>
                         </div>
                     </div>
                 </div>
-                <a href="{{URL::to('admin/photo')}}">
+                <a href="istruzioni.php">
                     <div class="panel-footer">
-                        <span class="pull-left">{{ trans("admin/admin.view_detail") }}</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-left">Vai alla pagina</span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
 
                         <div class="clearfix"></div>
                     </div>

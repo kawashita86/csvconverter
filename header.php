@@ -15,7 +15,8 @@
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
     <!-- Bootstrap core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/base.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
@@ -45,7 +46,8 @@
             <ul class="nav navbar-nav">
                 <li <?php if($main_page == 'index') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'index')? '#' : 'index.php' ?>">Home</a></li>
                 <li <?php if($main_page == 'templates') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'templates')? '#' : 'templates.php' ?>">Templates</a></li>
-                <li <?php if($main_page == 'conversion') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'conversion')? '#' : 'conversion.php' ?>">Conversion Tool</a></li>
+                <li <?php if($main_page == 'conversion') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'conversion')? '#' : 'conversion.php' ?>">Conversioni</a></li>
+                <li <?php if($main_page == 'impostazioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'impostazioni')? '#' : 'impostazioni.php' ?>">Impostazioni</a></li>
                 <li <?php if($main_page == 'istruzioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'istruzioni')? '#' : 'istruzioni.php' ?>">Istruzioni</a></li>
             </ul>
         </div><!--/.nav-collapse -->

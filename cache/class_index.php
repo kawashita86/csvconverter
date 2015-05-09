@@ -10,6 +10,7 @@
   'Cell' => 'classes/Cell.php',
   'CellConversion' => 'classes/CellConversion.php',
   'CellType' => 'classes/CellType.php',
+  'Configuration' => 'classes/Configuration.php',
   'Controller' => 'classes/Controller.php',
   'Db' => '',
   'DbCore' => 'classes/db/Db.php',

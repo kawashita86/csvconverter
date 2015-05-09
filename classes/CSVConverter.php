@@ -25,49 +25,14 @@ class CSVConverter
     }
 
     public static function getValidatedRow($row, $validators){
+        $new_row = array();
         foreach($validators as $key => $validator){
            if($validator['type'] != null) {
-               $row[$key] = CSVConverter::$validator['type']($row[$key]);
-           }
-           if($validator['conversion'] != null) {
-               $row[$key] = CSVConverter::$validator['conversion']($row[$key]);
+               $new_row[(int)$key] = CSVConverter::$validator['type']($row,$validator['position'], $validator['fixed_value'], $validator['concatenation_char']);
            }
         }
 
-        return $row;
-    }
-
-
-    private function loadSettings(){
-        $this->separator = Configuration::get('CSV_SEPARATOR');
-        $this->skip = (int)Configuration::get('CSV_SKIP');
-        self::$column_mask  = array(
-            'reference' => (int)Configuration::get('CSV_REFERENCE'),
-            'tax_rate' => (int)Configuration::get('CSV_TAX_RATE'),
-            'price_tin' => (int)Configuration::get('CSV_PRICE_TIN'),
-            'quantity' => (int)Configuration::get('CSV_QUANTITY')
-        );
-    }
-
-    protected function openCsvFile($filename)
-    {
-        //$dir = _PS_ROOT_DIR_.'\modules\csvimporter\import\\';
-        $dir = _PS_ROOT_DIR_.'/modules/csvimporter/import/';
-        $handle = fopen($dir.strval(preg_replace('/\.{2,}/', '.', $filename)), 'r');
-
-        if (!$handle)
-            $this->errors[] = Tools::displayError('Cannot read the .CSV file');
-
-        $this->rewindBomAware($handle);
-
-        for ($i = 0; $i < (int)$this->skip; ++$i)
-            $line = fgetcsv($handle, MAX_LINE_SIZE, $this->separator);
-        return $handle;
-    }
-
-    protected function closeCsvFile($handle)
-    {
-        fclose($handle);
+        return $new_row;
     }
 
     public function rewindBomAware($handle)
@@ -78,41 +43,49 @@ class CSVConverter
             rewind($handle);
     }
 
-    protected static function getPrice($field)
+    protected static function getPrice($row, $field, $fixed_value)
     {
-        $field = ((float)str_replace(',', '.', $field));
-        $field = ((float)str_replace('%', '', $field));
-        return $field;
+        $row[$field] = ((float)str_replace(',', '.', $row[$field]));
+        $row[$field] = ((float)str_replace('%', '', $row[$field]));
+        return $row[$field];
     }
 
-    protected static function getText($field){
-        return $field;
+    protected static function getText($row, $field, $fixed_value){
+        return strip_tags($row[$field]);
     }
 
-    protected static function getNumber($field)
+    protected static function getPriceComma($row, $field, $fixed_value) {
+        $row[$field] = ((float)str_replace('%', '', $row[$field]));
+        return $row[$field];
+    }
+
+
+    protected static function getIntegerNumber($row, $field, $fixed_value)
     {
-        $field = ((float)str_replace(',', '.', $field));
-        $field = ((float)str_replace('%', '', $field));
-        return $field;
+        $row[$field] = ((float)str_replace(',', '.', $row[$field]));
+        $row[$field] = ((float)str_replace('%', '', $row[$field]));
+        return (int)$row[$field];
     }
 
-    protected static function getHTML($field)
+    protected static function getHTML($row, $field)
     {
-        return $field;
+        return $row[$field];
     }
 
-    protected static function getFixedValue($field)
+    protected static function getFixedValue($row, $field, $fixed_value)
     {
-        $field = 1;
-        return $field;
+        return $fixed_value;
     }
 
-    protected static function forceInteger($field){
-        return (int)ceil($field);
-    }
+    protected static function getConcatenation($row, $field, $fixed_value, $special_chars){
+        $indexes = explode(',', $fixed_value);
+        $concatenation = array();
+        foreach($indexes as $v){
+           if(isset($row[(int)$v]))
+            $concatenation[] = $row[(int)$v];
+        }
 
-    protected static function stripHtml($field){
-        return strip_tags($field);
+        return implode($special_chars, $concatenation);
     }
 
     public static function getMaskedRow($row)
@@ -131,40 +104,6 @@ class CSVConverter
         foreach ($type_value as $nb => $type)
             if ($type != 'no')
                 self::$column_mask[$type] = $nb;
-    }
-
-    public function importProduct($filename){
-        $handle = $this->openCsvFile($filename);
-        $query = 'INSERT IGNORE INTO '._DB_PREFIX_. 'csvimporter (reference, price_tin, price, quantity) VALUES ';
-        for ($current_line = 0; $line = fgetcsv($handle, MAX_LINE_SIZE, $this->separator); $current_line++)
-        {
-            $info = CSVImporter::getMaskedRow($line);
-            $info['price_tin'] = CSVImporter::getPrice($info['price_tin']);
-            $info['price'] = (float)number_format($info['price_tin'] / (1 + $info['tax_rate'] / 100), 6, '.', '');
-            $info['quantity'] = CSVImporter::getPrice($info['quantity']);
-            $query .= '("'.$info['reference'].'", '.$info['price_tin'].', '.$info['price'].', '.(int)$info['quantity'].'),';
-        }
-        $this->closeCsvFile($handle);
-        $query = rtrim($query, ",");
-        Db::getInstance()->execute('TRUNCATE '._DB_PREFIX_. "csvimporter");
-        return Db::getInstance()->execute($query.';');
-
-
-    }
-
-    private function importCSVtoTable()
-    {
-        $this->loadSettings();
-        if($this->uploadCSV()) {
-            $filename = $_FILES['file']['name'];
-            if ($this->importProduct($filename)) {
-
-            } else {
-                $this->errors[] = Tools::displayError('There was problem while reading the file content');
-                return false;
-            }
-        }
-        return false;
     }
 
     public function uploadCSV(){

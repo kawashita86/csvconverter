@@ -3,6 +3,7 @@ include_once('config/config.php');
 
 use League\Csv\Reader;
 use League\Csv\Writer;
+//use Maatwebsite\Excel;
 
 
 require 'vendor/autoload.php';
@@ -12,57 +13,73 @@ if($converter->uploadCSV()) {
     $filename = $_FILES['file']['name'];
 
     $template = new Template((int)Tools::getValue('template_name'));
-    $positions = $template->getPositionList();
+    $cell_title = $template->getCellsHeader();
     $validators = $template->getCellValidators();
+
+    //switch for different file, must treat if not csv
+    if(Configuration::get('IMPORT_FILE_TYPE') != 'csv'){
+       /* Excel::load('import/.'.$filename.Configuration::get('IMPORT_FILE_TYPE') , function($reader) {
+
+            // reader methods
+
+        })->convert('csv');*/
+    }
 
     $reader = Reader::createFromPath(new SplFileObject('import/'.$filename));
 
-    $reader->setDelimiter('|');
-    $reader->setEnclosure('"');
+    Configuration::loadConfiguration();
+
+    if(Configuration::get('SEPARATOR') == '\t' || Configuration::get('SEPARATOR') == 't')
+        $reader->setDelimiter("\t");
+    else
+        $reader->setDelimiter(Configuration::get('SEPARATOR'));
+    if(Configuration::get('TEXT_CONTAINER') != '' && Configuration::get('TEXT_CONTAINER') != 'n')
+        $reader->setEnclosure(Configuration::get('TEXT_CONTAINER'));
     $reader->setEscape('\\');
-    $reader->setNewline("\r\n");
-    $data = $reader->fetchAssoc($positions, function($row) use ($validators) {
-        // return array_map('strtoupper', $row);
-        if(!empty($row))
+    $reader->setNewline(Configuration::get('NEW_LINE'));
+    $reader->setFlags(SplFileObject::SKIP_EMPTY);
+
+
+    //$headers = $reader->fetchOne();
+    if((int)Configuration::get('HEADER_LINE') == 0){
+        $data = $reader->fetchAll(function ($row) use($validators) {
             return CSVConverter::getValidatedRow($row, $validators);
-    });
-    echo '<pre>';
-    print_r($data);
-    echo '</pre>';
-//$csv->setOutputBOM(Reader::BOM_UTF8);
-//$bom = $csv->getInputBOM();
-//$reader->setEncodingFrom('iso-8859-15');
-//$csv->setFlags(SplFileObject::READ_AHEAD|SplFileObject::SKIP_EMPTY);
+        });
+    } else {
+        $data = $reader->setOffset((int)Configuration::get('HEADER_LINE'))->fetchAll(function ($row) use($validators) {
+            return CSVConverter::getValidatedRow($row, $validators);
+        });
+    }
 
-//$delimiters_list = $reader->detectDelimiterList(10, [' ', '|']);
+    //create new file and print_it
+    $csv = Writer::createFromFileObject(new SplTempFileObject());
+    if($template->separator == '\t' || $template->separator == 't')
+        $csv->setDelimiter("\t");
+    else
+        $csv->setDelimiter($template->separator);
 
-//foreach ($reader as $index => $row) { }
-//echo $reader->__toString();
+    if(empty($template->text_container) || $template->text_container == 'n')
+        $csv->setEnclosure(" ");
+    else
+        $csv->setEnclosure(stripslashes($template->text_container));
+
+    $csv->setEscape('\\');
+    $csv->setOutputBOM(Reader::BOM_UTF8);
+    $csv->insertOne($cell_title);
+    $csv->insertAll($data);
+
+    if(Tools::getValue('file_type') == 'txt') {
+        $filename = $template->name.'_'.date('Y-m-d_H-i');
+        header('Content-Type: text/csv; charset=UTF-8');
+        header('Content-Disposition: attachment; filename="'.$filename.'.txt"');
+        $csv->output($filename.".txt");
+    } else if(Tools::getValue('file_type') == 'csv') {
+        echo $csv->toHTML();
+    }
 
 //header('Content-Type: text/csv; charset=UTF-8');
 //header('Content-Disposition: attachment; filename="name-for-your-file.csv"');
 //$reader->output();
 //"name-for-your-file.csv"
 
-//$data = $reader->fetchAssoc(['firstname', 'lastname', 'email']);
-//$data = $reader->fetchColumn(2);
-//$data = $reader->fetchAll(function ($row) {
-//    return array_map('strtoupper', $row);
-//});
-
-
-    /*
-    $res = [];
-    $func = null;
-    $nbIteration = $reader->each(function ($row, $index, $iterator) use (&$res, $func)) {
-        if (is_callable($func)) {
-            $res[] = $func($row, $index, $iterator);
-            return true;
-        }
-        $res[] = $row;
-        return true;
-    });
-     */
-
-//$writer = Writer::createFromPath(new SplFileObject('/path/to/your/csv/file.csv', 'a+'), 'w');
 }
