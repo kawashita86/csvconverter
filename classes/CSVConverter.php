@@ -43,6 +43,11 @@ class CSVConverter
             rewind($handle);
     }
 
+    protected static function getVoidField($row, $field, $fixed_value)
+    {
+        return '';
+    }
+
     protected static function getPrice($row, $field, $fixed_value)
     {
         $row[$field] = ((float)str_replace(',', '.', $row[$field]));

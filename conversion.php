@@ -33,7 +33,7 @@ include_once('header.php');
                 <div class="form-group">
                     <label for="separator" class="col-md-2 control-label">File Format</label>
                     <div class="col-md-10">
-                        <select class="form-control" id="file_type" name="file_type">
+                        <select class="form-control" id="file_type" name="file_type" required>
                             <option value="csv">CSV</option>
                             <option value="txt">TXT</option>
                         </select>
@@ -43,7 +43,7 @@ include_once('header.php');
                 <div class="form-group">
                     <label for="text_container" class="col-md-2 control-label">File Upload</label>
                     <div class="col-md-10">
-                        <input type="file" value="" name="file" />
+                        <input type="file" value="" name="file" required />
                     </div>
                 </div>
                 <div class="form-group">

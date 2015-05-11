@@ -23,7 +23,7 @@ $(function()
         {
             e.preventDefault();
             var current = $(this).parents('.entry');
-            if(current.find('input[name="cell_position[]"]').val() !== '' || current.find('input[name="cell_position[]"]').val().length !== 0 ) {
+            if(current.find('select[name="cell_formatting[]"]').val() !== '' && current.find('select[name="cell_formatting[]"]').val().length !== 0 ) {
                 var previous = current.prev('.entry');
                 previous.before(current);
             }
@@ -33,7 +33,7 @@ $(function()
 
         var current = $(this).parents('.entry');
         var next = current.next('.entry');
-        if(next.find('input[name="cell_position[]"]').val() !== '' || next.find('input[name="cell_position[]"]').val().length !== 0 ) {
+        if(next.find('select[name="cell_formatting[]"]').val() !== '' && next.find('select[name="cell_formatting[]"]').val().length !== 0 ) {
 
             next.after(current);
         }

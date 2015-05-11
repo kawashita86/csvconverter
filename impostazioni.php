@@ -6,6 +6,16 @@ Configuration::loadConfiguration();
 include_once('header.php');
 ?>
 <div class="container theme-showcase" role="main">
+   <?php if(Tools::isSubmit('conf')){ ?>
+    <div class="alert <?php if(Tools::getValue('conf') == 1){ ?>alert-success<?php } else if(Tools::getValue('conf')== 2) { ?>alert alert-danger<?php } ?> alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?php if(Tools::getValue('conf') == 1){ ?>
+            Aggiornamento avvenuto con successo
+        <?php } else if(Tools::getValue('conf')== 2) { ?>
+            Si sono verificati degli errori durante l'aggiornamento
+        <?php } ?>
+    </div>
+    <?php } ?>
     <div class="page-header">
         <h3>
              Impostazioni

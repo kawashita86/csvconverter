@@ -14,7 +14,7 @@ if(Tools::getValue('submitTemplate')){
         if($template->update())
             $template->updateCell($_POST);
         else
-            echo 'errore generale';
+            Tools::redirect('templates.php?conf=2');
     } else {
         $template = new Template();
         $template->name = Tools::getValue('template_name');
@@ -26,14 +26,17 @@ if(Tools::getValue('submitTemplate')){
         if($template->add())
             $template->updateCell($_POST);
         else
-            echo 'errore generale';
+            Tools::redirect('templates.php?conf=2');
     }
 
-    Tools::redirect('templates.php');
+    Tools::redirect('templates.php?conf=1');
+
 } else if(Tools::getValue('deleteTemplate')) {
     if(Tools::getValue('id_template')){
         $template = new Template((int)Tools::getValue('id_template'));
-        $template->delete();
-        Tools::redirect('templates.php');
+        if($template->delete())
+            Tools::redirect('templates.php?conf=1');
+        else
+            Tools::redirect('templates.php?conf=2');
     }
 }

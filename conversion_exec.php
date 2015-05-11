@@ -74,12 +74,12 @@ if($converter->uploadCSV()) {
         header('Content-Disposition: attachment; filename="'.$filename.'.txt"');
         $csv->output($filename.".txt");
     } else if(Tools::getValue('file_type') == 'csv') {
+        $filename = $template->name.'_'.date('Y-m-d_H-i');
+
+        //header('Content-Type: text/csv; charset=UTF-8');
+        //header('Content-Disposition: attachment; filename="'.$filename.'.csv"');
+        //$csv->output($filename.".csv");
         echo $csv->toHTML();
     }
-
-//header('Content-Type: text/csv; charset=UTF-8');
-//header('Content-Disposition: attachment; filename="name-for-your-file.csv"');
-//$reader->output();
-//"name-for-your-file.csv"
 
 }
