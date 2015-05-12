@@ -63,6 +63,8 @@ if($converter->uploadCSV()) {
     else
         $csv->setEnclosure(stripslashes($template->text_container));
 
+    $csv->setNewline("\n");
+
     $csv->setEscape('\\');
     $csv->setOutputBOM(Reader::BOM_UTF8);
     $csv->insertOne($cell_title);

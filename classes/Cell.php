@@ -9,6 +9,10 @@ class Cell extends ObjectModel{
     public $id_type;
     public $fixed_value = '';
     public $cell_position;
+    public $price_round = 0;
+    public $strip_element = 0;
+    public $quantity_round = 0;
+    public $no_negative = 0;
 
     /**
      * @see ObjectModel::$definition
@@ -23,6 +27,10 @@ class Cell extends ObjectModel{
             'id_type' => array('type' => self::TYPE_INT),
             'fixed_value' => array('type' => self::TYPE_STRING),
             'cell_position' => array('type' => self::TYPE_INT),
+            'price_round' => array('type' => self::TYPE_INT),
+            'strip_element' => array('type' => self::TYPE_INT),
+            'quantity_round' => array('type' => self::TYPE_INT),
+            'no_negative' => array('type' => self::TYPE_INT)
         ),
     );
 

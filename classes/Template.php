@@ -74,10 +74,13 @@ class Template extends ObjectModel {
         $cell_type = CellType::getAllById();
         $validators = array();
         foreach($this->cells as $c){
+
             $validators[(int)$c['cell_position']] =
                 array(
                     'type' => $c['id_type'] == 0 ? null : $cell_type[$c['id_type']]['function'],
                     'fixed_value' => $c['fixed_value'],
+                    'extra_action' => ($c['id_type'] == 2 || $c['id_type'] == 7) ?$c['price_round'] : $c['id_type'] == 4 ? $c['quantity_round'] : 0,
+                    'extra_action_1' => ($c['id_type'] == 2 || $c['id_type'] == 7) ?$c['strip_element'] : $c['id_type'] == 4 ? $c['no_negative'] : 0,
                     'concatenation_char' => $this->concatenation_char,
                     'position' => (int)$c['position']
                 );
@@ -104,12 +107,22 @@ class Template extends ObjectModel {
                     $id_type = (int)$request_data['cell_formatting'][$i];
                     $id_template = $this->id;
                     $fixed_value = $request_data['special_value'][$i];
+
+                    $price_round = isset($request_data['price_round'][$i])? (int)$request_data['price_round'][$i] : 0;
+                    $strip_element = isset($request_data['strip_element'][$i])? (int)$request_data['strip_element'][$i] : 0;
+                    $quantity_round = isset($request_data['quantity_round'][$i])? (int)$request_data['quantity_round'][$i] : 0;
+                    $no_negative = isset($request_data['no_negative'][$i])? (int)$request_data['no_negative'][$i] : 0;
+
                     $cell_position = $i;
                     if($cell_id == 0) {
-                        Db::getInstance()->execute('INSERT INTO cells (id_template, name, position, id_type, fixed_value, cell_position) VALUES (' . $id_template . ', "' . pSQL($name, true) . '", ' . $position . ', ' . $id_type . ', "' . pSQL($fixed_value, true) . '", '.$cell_position.')');
+                        Db::getInstance()->execute('INSERT INTO cells
+    (id_template, name, position, id_type, fixed_value, cell_position, price_round, strip_element, quantity_round, no_negative)
+VALUES (' . $id_template . ', "' . pSQL($name, true) . '", ' . $position . ', ' . $id_type . ', "' . pSQL($fixed_value, true) . '", '.$cell_position.', '.$price_round.', '.$strip_element.', '.$quantity_round.', '.$no_negative.')');
                         $ids_query[] = Db::getInstance()->Insert_ID();
                     } else {
-                        Db::getInstance()->execute('UPDATE cells SET name = "' . pSQL($name, true) . '",  position = ' . $position . ', id_type = ' . $id_type . ', fixed_value = "' . pSQL($fixed_value, true) . '", cell_position = '.$cell_position.' WHERE id_cell = '.$cell_id);
+                        Db::getInstance()->execute('UPDATE cells
+SET name = "' . pSQL($name, true) . '",  position = ' . $position . ', id_type = ' . $id_type . ', fixed_value = "' . pSQL($fixed_value, true) . '", cell_position = '.$cell_position.', price_round = '.$price_round.', strip_element = '.$strip_element.', quantity_round = '.$quantity_round.', no_negative = '.$no_negative.'
+WHERE id_cell = '.$cell_id);
 
                     }
                 }

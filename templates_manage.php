@@ -86,8 +86,8 @@ include_once('header.php');
                 <?php if(isset($cell_made) && count($cell_made) > 0) {
                     foreach ($cell_made as $c) {
                         ?>
-                        <div class="form-group entry">
-                            <div class="col-md-12">
+                        <div class="form-group entry panel-default panel">
+                            <div class="col-md-12 panel-body">
                                 <div class="form-group row">
                                     <input type="hidden" name="cell_id[]" value="<?php echo $c['id_cell'] ?>"/>
                                     <label for="cell_name[]" class="col-md-1 control-label">Nome</label>
@@ -138,13 +138,49 @@ include_once('header.php');
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 formatting-extension price-extension" <?php echo $c['id_type'] != 2 && $c['id_type'] != 7 ? 'style="display:none"': '' ?>>
+                                <div class="form-group row">
+                                    <label for="cell_name[]" class="col-md-1 control-label">N. Decimali</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="price_round[]">
+                                            <option value="0">-</option>
+                                            <option value="2" <?php echo ($c['price_round'] == 2 ? 'selected' : ''); ?>>2 </option>
+                                            <option value="3" <?php echo ($c['price_round'] == 3 ? 'selected' : ''); ?>>3</option>
+                                            <option value="4" <?php echo ($c['price_round'] == 4 ? 'selected' : ''); ?>>4</option>
+                                        </select>
+                                    </div>
+                                    <div class="checkbox col-md-3">
+                                        <label for="">
+                                            <input type="checkbox" name="strip_element[]" value="1" <?php echo ($c['strip_element'] == 1 ? 'checked' : ''); ?>/> Elimina carattere ¤
+                                        </label>
+                                        <input class='check_strip_element'  type='hidden' value='0' name='strip_element[]'>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 formatting-extension quantity-extension" <?php echo $c['id_type'] != 4 ? 'style="display:none"': '' ?>>
+                                <div class="form-group row">
+                                    <label for="" class="col-md-1 control-label">Arrotondamento</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="quantity_round[]" >
+                                            <option value="0" <?php echo ($c['quantity_round'] == 0 ? 'selected' : ''); ?>>Inferiore</option>
+                                            <option value="1" <?php echo ($c['quantity_round'] == 1 ? 'selected' : ''); ?>>Superiore</option>
+                                        </select>
+                                    </div>
+                                    <div class="checkbox col-md-3">
+                                        <label for="" >
+                                            <input type="checkbox" name="no_negative[]" value="1" <?php echo ($c['no_negative'] == 1 ? 'checked' : ''); ?>/> Valori negativi a 0
+                                        </label>
+                                        <input class='check_no_negative'  type='hidden' value='0' name='no_negative[]'>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     <?php }
                 }
                 ?>
                 <!-- row element for each field from now on -->
-                <div class="form-group entry">
-                    <div class="col-md-12">
+                <div class="form-group entry panel-default panel">
+                    <div class="col-md-12 panel-body">
                         <div class="form-group row">
                             <input type="hidden" name="cell_id[]" value="" />
                             <label for="cell_name[]" class="col-md-1 control-label">Nome</label>
@@ -190,7 +226,45 @@ include_once('header.php');
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 formatting-extension price-extension" style="display:none;">
+                        <div class="form-group row">
+                            <label for="cell_name[]" class="col-md-1 control-label">N. Decimali</label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="price_round[]">
+                                    <option value="">0</option>
+                                    <option value="2">2 </option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div class="checkbox col-md-3">
+                            <label for="">
+                                <input type="checkbox" name="strip_element[]" value="1"/> Elimina carattere ¤
+                            </label>
+                            <input class='check_strip_element'  type='hidden' value='0' name='strip_element[]'>
+
+                            </div>
+                    </div>
                 </div>
+                    <div class="col-md-12 formatting-extension quantity-extension" style="display:none">
+                        <div class="form-group row">
+                            <label for="" class="col-md-1 control-label">Arrotondamento</label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="quantity_round[]" >
+                                    <option value="0">Inferiore</option>
+                                    <option value="1">Superiore</option>
+                                </select>
+                            </div>
+                            <div class="checkbox col-md-3">
+                                <label for="" >
+                                    <input type="checkbox" name="no_negative[]" value="1"/> Valori negativi a 0
+                                </label>
+                                <input class='check_no_negative'  type='hidden' value='0' name='no_negative[]'>
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </fieldset>
                 <input type="hidden" name="id_template" value="<?php if(isset($template)) { echo $template->id; } ?>" />
                 <input type="hidden" name="submitTemplate" value="1"/>

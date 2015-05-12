@@ -3,6 +3,8 @@ include_once('config/config.php');
 
 
 if(Tools::getValue('submitTemplate')){
+    print_r($_POST);
+    die();
     if(Tools::getValue('id_template')){
         $template = new Template((int)Tools::getValue('id_template'));
         $template->name = Tools::getValue('template_name');

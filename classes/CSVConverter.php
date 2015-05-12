@@ -28,7 +28,8 @@ class CSVConverter
         $new_row = array();
         foreach($validators as $key => $validator){
            if($validator['type'] != null) {
-               $new_row[(int)$key] = CSVConverter::$validator['type']($row,$validator['position'], $validator['fixed_value'], $validator['concatenation_char']);
+               $new_row[(int)$key] =
+                   CSVConverter::$validator['type']($row,$validator['position'], $validator['fixed_value'], $validator['concatenation_char'], $validator['extra_action'], $validator['extra_action_1']);
            }
         }
 
@@ -48,27 +49,46 @@ class CSVConverter
         return '';
     }
 
-    protected static function getPrice($row, $field, $fixed_value)
+    protected static function getPrice($row, $field, $fixed_value,$special_chars, $round, $strip_element)
     {
         $row[$field] = ((float)str_replace(',', '.', $row[$field]));
+        if($strip_element != 0)
+            $row[$field] = ((float)str_replace('¤', '', $row[$field]));
         $row[$field] = ((float)str_replace('%', '', $row[$field]));
+        if($round == 0)
+            $round = 2;
+
+        $row[$field] =(float)number_format( $row[$field], $round, '.', '');
         return $row[$field];
     }
 
     protected static function getText($row, $field, $fixed_value){
-        return strip_tags($row[$field]);
+        return  trim(preg_replace('/\s+/', ' ', strip_tags($row[$field])));
     }
 
-    protected static function getPriceComma($row, $field, $fixed_value) {
+    protected static function getPriceComma($row, $field, $fixed_value, $special_chars, $round, $strip_element) {
+        $row[$field] = ((float)str_replace(',', '.', $row[$field]));
+        if($strip_element != 0)
+            $row[$field] = ((float)str_replace('¤', '', $row[$field]));
         $row[$field] = ((float)str_replace('%', '', $row[$field]));
+        if($round == 0)
+            $round = 2;
+
+        $row[$field] = number_format( $row[$field], $round, ',', '');
         return $row[$field];
     }
 
 
-    protected static function getIntegerNumber($row, $field, $fixed_value)
+    protected static function getIntegerNumber($row, $field, $fixed_value, $special_chars,  $round, $no_negative)
     {
         $row[$field] = ((float)str_replace(',', '.', $row[$field]));
         $row[$field] = ((float)str_replace('%', '', $row[$field]));
+        if($round == 0)
+            $row[$field] = floor($row[$field]);
+        else if($round == 1)
+            $row[$field] = ceil($row[$field]);
+        if($no_negative)
+            return ((int)$row[$field] < 0) ? 0 : (int)$row[$field];
         return (int)$row[$field];
     }
 

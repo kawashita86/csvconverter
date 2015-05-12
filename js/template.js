@@ -4,11 +4,16 @@ $(function()
     {
         e.preventDefault();
 
-        var controlForm = $('.template-form-container form '),
+        var controlForm = $('.template-form-container form fieldset.entries-border'),
             currentEntry = $(this).parents('.entry:first'),
             newEntry = $(currentEntry.clone()).appendTo(controlForm);
 
-        newEntry.find('input').val('');
+        newEntry.find('.formatting-extension').hide();
+        newEntry.find('.hide-fixed').hide();
+        newEntry.find('.hide-conversion').show();
+        newEntry.find('input:not([type=hidden])').val('');
+        newEntry.find('select').val('');
+
         controlForm.find('.entry:not(:last) .btn-add')
             .removeClass('btn-add').addClass('btn-remove')
             .removeClass('btn-success').addClass('btn-danger')
@@ -41,12 +46,42 @@ $(function()
 
     $(document).on('change', 'select[name="cell_formatting[]"]', function(e){
         var entry = $(this).parents('.entry');
-        if($(this).val() == '5' || $(this).val() == '6') {
+        var current_type = $(this).val();
+        if(current_type == '5' || current_type == '6') {
            entry.find('.hide-conversion').hide();
+           entry.find('.formatting-extension').hide();
            entry.find('.hide-fixed').show();
-       } else {
+       } else if(current_type == 4){
+            entry.find('.formatting-extension').hide();
+            entry.find('.quantity-extension').show();
+            entry.find('.hide-fixed').hide();
+            entry.find('.hide-conversion').show();
+
+        } else if(current_type == 2 || current_type == 7){
+            entry.find('.formatting-extension').hide();
+            entry.find('.price-extension').show();
             entry.find('.hide-fixed').hide();
             entry.find('.hide-conversion').show();
         }
+        else
+        {
+            entry.find('.formatting-extension').hide();
+            entry.find('.hide-fixed').hide();
+            entry.find('.hide-conversion').show();
+        }
+    });
+
+    $('#template_form').on('validated.bs.validator', function(){
+        $('.check_no_negative').each(function(){
+           if($(this).parent().find('input[type=checkbox]').is(':checked') == true)
+                $(this).attr('disabled', true);
+        });
+
+        $('.check_strip_element').each(function(){
+            if($(this).parent().find('input[type=checkbox]').is(':checked')  == true)
+                $(this).attr('disabled', true);
+        });
+
+        return true;
     });
 });
