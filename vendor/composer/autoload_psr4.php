@@ -6,13 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
-    'Stringy\\' => array($vendorDir . '/danielstjules/stringy/src'),
-    'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
-    'Illuminate\\Support\\' => array($vendorDir . '/illuminate/support'),
-    'Illuminate\\Filesystem\\' => array($vendorDir . '/illuminate/filesystem'),
-    'Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
-    'Illuminate\\Config\\' => array($vendorDir . '/illuminate/config'),
-    'Illuminate\\Cache\\' => array($vendorDir . '/illuminate/cache'),
 );

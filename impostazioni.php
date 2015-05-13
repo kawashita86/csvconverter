@@ -30,9 +30,9 @@ include_once('header.php');
                             <select class="form-control" id="IMPORT_FILE_TYPE" name="IMPORT_FILE_TYPE" required>
                                 <option value="csv" <?php if(Configuration::get('IMPORT_FILE_TYPE') == 'csv'){ echo 'selected'; } ?>>csv</option>
                                 <option value="txt" <?php  if(Configuration::get('IMPORT_FILE_TYPE') == 'txt'){ echo 'selected'; } ?>>txt</option>
-                                <option value="ods" <?php  if(Configuration::get('IMPORT_FILE_TYPE') == 'ods'){ echo 'selected'; } ?>>ods</option>
+                                <!--<option value="ods" <?php  if(Configuration::get('IMPORT_FILE_TYPE') == 'ods'){ echo 'selected'; } ?>>ods</option>-->
                             </select>
-                            <p class="help-block">numero di righe che compongono l'intestazione del csv.</p>
+                            <p class="help-block">Formato del file che verrà importato per la conversione.</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -63,7 +63,7 @@ include_once('header.php');
                             <label for="TEXT_CONTAINER" class="col-md-2 control-label">Contenitore testo</label>
                             <div class="col-md-10">
                                 <select class="form-control" id="TEXT_CONTAINER" name="TEXT_CONTAINER" />
-                                    <option value="n" <?php echo (Configuration::get('TEXT_CONTAINER') == "n")? 'selected' : ''; ?>>Nessuno</option>
+                                    <option value="n" <?php echo (Configuration::get('TEXT_CONTAINER') == "n")? 'selected' : ''; ?>>Automatico</option>
                                     <option value='"' <?php echo (Configuration::get('TEXT_CONTAINER') == '"')? 'selected' : ''; ?>>"</option>
                                     <option value="'" <?php echo (Configuration::get('TEXT_CONTAINER') == "'")? 'selected' : ''; ?>>'</option>
                                 </select>
@@ -77,11 +77,12 @@ include_once('header.php');
                                 <option value="\r\n" <?php echo Configuration::get('NEW_LINE') == '\r\n' ? 'selected' : ''; ?>>\r\n</option>
                                 <option value="\n"  <?php echo Configuration::get('NEW_LINE') == '\n' ? 'selected' : ''; ?>>\n</option>
                             </select>
-                            <p class="help-block">la combinazione di caratteri utilizzata per separare le righe</p>
+                            <p class="help-block">il carattere utilizzato come "New Line"</p>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <input type="submit" value="Aggiorna" name="updateImpostazioni" class="btn btn-success" />
+                        <a class="btn btn-default" href="index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+                        <input type="submit" value="Aggiorna" name="updateImpostazioni" class="btn btn-info" />
                     </div>
                 </form>
         </div>

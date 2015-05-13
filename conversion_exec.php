@@ -1,10 +1,8 @@
 <?php
 include_once('config/config.php');
-
 use League\Csv\Reader;
 use League\Csv\Writer;
 //use Maatwebsite\Excel;
-
 
 require 'vendor/autoload.php';
 
@@ -15,15 +13,6 @@ if($converter->uploadCSV()) {
     $template = new Template((int)Tools::getValue('template_name'));
     $cell_title = $template->getCellsHeader();
     $validators = $template->getCellValidators();
-
-    //switch for different file, must treat if not csv
-    if(Configuration::get('IMPORT_FILE_TYPE') != 'csv'){
-       /* Excel::load('import/.'.$filename.Configuration::get('IMPORT_FILE_TYPE') , function($reader) {
-
-            // reader methods
-
-        })->convert('csv');*/
-    }
 
     $reader = Reader::createFromPath(new SplFileObject('import/'.$filename));
 
@@ -83,5 +72,7 @@ if($converter->uploadCSV()) {
         //$csv->output($filename.".csv");
         echo $csv->toHTML();
     }
+
+} else {
 
 }

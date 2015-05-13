@@ -139,23 +139,23 @@ class CSVConverter
             switch ($_FILES['file']['error'])
             {
                 case UPLOAD_ERR_INI_SIZE:
-                    $this->errors[] = Tools::displayError('The uploaded file exceeds the upload_max_filesize directive in php.ini. If your server configuration allows it, you may add a directive in your .htaccess.');
+                    echo  Tools::displayError('The uploaded file exceeds the upload_max_filesize directive in php.ini. If your server configuration allows it, you may add a directive in your .htaccess.');
                     return false;
                 case UPLOAD_ERR_FORM_SIZE:
-                    $this->errors[] = Tools::displayError('The uploaded file exceeds the post_max_size directive in php.ini.
+                    echo  Tools::displayError('The uploaded file exceeds the post_max_size directive in php.ini.
 							If your server configuration allows it, you may add a directive in your .htaccess, for example:');
                     return false;
                 case UPLOAD_ERR_PARTIAL:
-                    $this->errors[] = Tools::displayError('The uploaded file was only partially uploaded.');
+                    echo  Tools::displayError('The uploaded file was only partially uploaded.');
                     return false;
                 case UPLOAD_ERR_NO_FILE:
-                    $this->errors[] = Tools::displayError('No file was uploaded.');
+                    echo  Tools::displayError('No file was uploaded.');
                     return false;
             }
         }
         else if (!file_exists($_FILES['file']['tmp_name']) ||
             !@move_uploaded_file($_FILES['file']['tmp_name'], $dir.$_FILES['file']['name'])) {
-            $this->errors[] = 'An error occurred while uploading / copying the file.';
+            echo 'An error occurred while uploading / copying the file.';
             return false;
         }
         else

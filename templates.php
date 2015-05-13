@@ -46,6 +46,7 @@ include_once('header.php');
     </table>
     <div class="row">
         <div class="col-md-12">
+            <a class="btn btn-default" href="index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
             <a href="templates_manage.php" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <?php
 include_once('config/config.php');
 
-$main_page = 'templates';
+$main_page = '';
 $cell_type = CellType::getAll();
 $cell_conversion = CellConversion::getAll();
 
@@ -61,7 +61,7 @@ include_once('header.php');
                     <label for="text_container" class="col-md-2 control-label">Contenitore testo</label>
                     <div class="col-md-10">
                         <select class="form-control" id="text_container" name="text_container" >
-                            <option value="n" <?php echo (isset($template) && $template->text_container == "n")? 'selected' : ''; ?>>Nessuno</option>
+                            <option value="n" <?php echo (isset($template) && $template->text_container == "n")? 'selected' : ''; ?>>Automatico</option>
                             <option value='"' <?php echo (isset($template) && $template->text_container == '"')? 'selected' : ''; ?>>"</option>
                             <option value="'" <?php echo (isset($template) && $template->text_container == "'")? 'selected' : ''; ?>>'</option>
                         </select>
@@ -96,12 +96,6 @@ include_once('header.php');
                                         <input type="text" class="form-control" placeholder="Name"
                                                name="cell_name[]" value="<?php echo stripslashes($c['name']) ?>">
                                     </div>
-                                    <label for="cell_position[]" class="col-md-1 control-label">Posizione</label>
-
-                                    <div class="col-md-1">
-                                        <input type="number" class="form-control" placeholder="0"
-                                               name="cell_position[]" value="<?php echo $c['position'] ?>">
-                                    </div>
                                     <label for="cell_formatting[]" class="col-md-1 control-label">Tipo</label>
 
                                     <div class="col-md-2">
@@ -111,6 +105,12 @@ include_once('header.php');
                                                 echo '<option value="' . $type['id_cell_type'] . '" ' . ($c['id_type'] == $type['id_cell_type'] ? 'selected' : '') . '>' . $type['name'] . '</option>';
                                             ?>
                                         </select>
+                                    </div>
+                                    <label for="cell_position[]" class="col-md-1 control-label">Posizione</label>
+
+                                    <div class="col-md-1">
+                                        <input type="number" class="form-control" placeholder="0"
+                                               name="cell_position[]" value="<?php echo $c['position'] ?>">
                                     </div>
                                     <div class="col-md-2">
                                        <span class="hide-conversion" <?php echo $c['id_type'] == 5 || $c['id_type'] == 6  ? 'style="display:none"': '' ?>>
@@ -140,8 +140,11 @@ include_once('header.php');
                             </div>
                             <div class="col-md-12 formatting-extension price-extension" <?php echo $c['id_type'] != 2 && $c['id_type'] != 7 ? 'style="display:none"': '' ?>>
                                 <div class="form-group row">
-                                    <label for="cell_name[]" class="col-md-1 control-label">N. Decimali</label>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-md-offset-1">
+                                        <span class="label label-info">Impostazioni avanzate</span>
+                                    </div>
+                                    <label for="cell_name[]" class="col-md-2 control-label">Numero Decimali</label>
+                                    <div class="col-md-1">
                                         <select class="form-control" name="price_round[]">
                                             <option value="0">-</option>
                                             <option value="2" <?php echo ($c['price_round'] == 2 ? 'selected' : ''); ?>>2 </option>
@@ -149,7 +152,7 @@ include_once('header.php');
                                             <option value="4" <?php echo ($c['price_round'] == 4 ? 'selected' : ''); ?>>4</option>
                                         </select>
                                     </div>
-                                    <div class="checkbox col-md-3">
+                                    <div class="checkbox col-md-3 col-md-offset-1">
                                         <label for="">
                                             <input type="checkbox" name="strip_element[]" value="1" <?php echo ($c['strip_element'] == 1 ? 'checked' : ''); ?>/> Elimina carattere ¤
                                         </label>
@@ -159,6 +162,9 @@ include_once('header.php');
                             </div>
                             <div class="col-md-12 formatting-extension quantity-extension" <?php echo $c['id_type'] != 4 ? 'style="display:none"': '' ?>>
                                 <div class="form-group row">
+                                    <div class="col-md-2 col-md-offset-1">
+                                        <span class="label label-info">Impostazioni avanzate</span>
+                                    </div>
                                     <label for="" class="col-md-1 control-label">Arrotondamento</label>
                                     <div class="col-md-2">
                                         <select class="form-control" name="quantity_round[]" >
@@ -166,7 +172,7 @@ include_once('header.php');
                                             <option value="1" <?php echo ($c['quantity_round'] == 1 ? 'selected' : ''); ?>>Superiore</option>
                                         </select>
                                     </div>
-                                    <div class="checkbox col-md-3">
+                                    <div class="checkbox col-md-3 col-md-offset-1">
                                         <label for="" >
                                             <input type="checkbox" name="no_negative[]" value="1" <?php echo ($c['no_negative'] == 1 ? 'checked' : ''); ?>/> Valori negativi a 0
                                         </label>
@@ -187,10 +193,6 @@ include_once('header.php');
                             <div class="col-md-2">
                                 <input type="text" class="form-control" placeholder="Name" name="cell_name[]">
                             </div>
-                            <label for="cell_position[]" class="col-md-1 control-label">Posizione</label>
-                            <div class="col-md-1">
-                                <input type="number" class="form-control" placeholder="0" name="cell_position[]">
-                            </div>
                             <label for="cell_formatting[]" class="col-md-1 control-label">Tipo</label>
                             <div class="col-md-2">
                                 <select class="form-control" name="cell_formatting[]" >
@@ -199,6 +201,10 @@ include_once('header.php');
                                         echo '<option value="'.$type['id_cell_type'].'">'.$type['name'].'</option>';
                                     ?>
                                 </select>
+                            </div>
+                            <label for="cell_position[]" class="col-md-1 control-label">Posizione</label>
+                            <div class="col-md-1">
+                                <input type="number" class="form-control" placeholder="0" name="cell_position[]">
                             </div>
                             <div class="col-md-2">
                                 <span class="hide-conversion">
@@ -228,8 +234,11 @@ include_once('header.php');
                     </div>
                     <div class="col-md-12 formatting-extension price-extension" style="display:none;">
                         <div class="form-group row">
-                            <label for="cell_name[]" class="col-md-1 control-label">N. Decimali</label>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-md-offset-1">
+                                <span class="label label-info">Impostazioni avanzate</span>
+                            </div>
+                            <label for="cell_name[]" class="col-md-2 control-label">Numero Decimali</label>
+                            <div class="col-md-1">
                                 <select class="form-control" name="price_round[]">
                                     <option value="">0</option>
                                     <option value="2">2 </option>
@@ -237,7 +246,7 @@ include_once('header.php');
                                     <option value="4">4</option>
                                 </select>
                             </div>
-                            <div class="checkbox col-md-3">
+                            <div class="checkbox col-md-3 col-md-offset-1">
                             <label for="">
                                 <input type="checkbox" name="strip_element[]" value="1"/> Elimina carattere ¤
                             </label>
@@ -248,6 +257,9 @@ include_once('header.php');
                 </div>
                     <div class="col-md-12 formatting-extension quantity-extension" style="display:none">
                         <div class="form-group row">
+                            <div class="col-md-2 col-md-offset-1">
+                                <span class="label label-info">Impostazioni avanzate</span>
+                            </div>
                             <label for="" class="col-md-1 control-label">Arrotondamento</label>
                             <div class="col-md-2">
                                 <select class="form-control" name="quantity_round[]" >
@@ -255,8 +267,8 @@ include_once('header.php');
                                     <option value="1">Superiore</option>
                                 </select>
                             </div>
-                            <div class="checkbox col-md-3">
-                                <label for="" >
+                            <div class="checkbox col-md-3 col-md-offset-1">
+                                <label for="no_negative[]" >
                                     <input type="checkbox" name="no_negative[]" value="1"/> Valori negativi a 0
                                 </label>
                                 <input class='check_no_negative'  type='hidden' value='0' name='no_negative[]'>
@@ -272,7 +284,7 @@ include_once('header.php');
         </div>
         <div class="col-md-12">
             <a class="btn btn-default" href="templates.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
-            <button type="button" class="btn btn-info" name="submitTemplate" onclick="$('#template_form').trigger('submit');"><i class="glyphicon glyphicon-save"></i> Salva</button>
+            <button type="button" class="btn btn-info" name="submitTemplate" onclick="$('#template_form').trigger('submit');"><i class="glyphicon glyphicon-floppy-disk"></i> Salva</button>
         </div>
     </div>
 

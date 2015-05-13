@@ -1,6 +1,6 @@
 {
     "require": {
         "league/csv": "~7.0",
-        "maatwebsite/excel": "~2.0.0"
+         "endel/php-code-downgrade": "0.2.0"
     }
 }

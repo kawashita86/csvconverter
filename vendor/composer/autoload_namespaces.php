@@ -6,11 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
-    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
-    'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
-    'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
-    'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
-    'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
-    'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
 );
