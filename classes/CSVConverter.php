@@ -63,7 +63,8 @@ class CSVConverter
     }
 
     protected static function getText($row, $field, $fixed_value){
-        return  trim(preg_replace('/\s+/', ' ', strip_tags($row[$field])));
+         $el = trim(preg_replace('/\s+/', ' ', strip_tags($row[$field])));
+        return  call_user_func_array('mb_convert_encoding', array($el,'UTF-8','WINDOWS-1252'));
     }
 
     protected static function getPriceComma($row, $field, $fixed_value, $special_chars, $round, $strip_element) {
@@ -94,7 +95,8 @@ class CSVConverter
 
     protected static function getHTML($row, $field)
     {
-        return $row[$field];
+        return  call_user_func_array('mb_convert_encoding', array($row[$field],'UTF-8','WINDOWS-1252'));
+
     }
 
     protected static function getFixedValue($row, $field, $fixed_value)

@@ -53,6 +53,22 @@ class Writer extends AbstractCsv
     protected static $fputcsv_param_count;
 
     /**
+     * Nb parameters for Writer::customfputcsv method
+     *
+     * @var integer
+     */
+    protected static $customfputcsv_param_count;
+
+    /**
+     * customfputcsv method from Writer
+     *
+     * @var ReflectionMethod
+     */
+    protected static $customfputcsv;
+
+    protected $set_special = false;
+
+    /**
      * Row Formatter and Validator trait
      */
     use Modifier\RowFilter;
@@ -74,6 +90,11 @@ class Writer extends AbstractCsv
         if (is_null(static::$fputcsv)) {
             static::$fputcsv             = new ReflectionMethod('\SplFileObject', 'fputcsv');
             static::$fputcsv_param_count = static::$fputcsv->getNumberOfParameters();
+        }
+
+        if (is_null(static::$customfputcsv)) {
+            static::$customfputcsv             = new ReflectionMethod('League\Csv\Writer', 'customFputcsv');
+            static::$customfputcsv_param_count = static::$customfputcsv->getNumberOfParameters();
         }
     }
 
@@ -122,7 +143,10 @@ class Writer extends AbstractCsv
             $this->csv = $this->getIterator();
         }
 
-        static::$fputcsv->invokeArgs($this->csv, $this->getFputcsvParameters($row));
+        if($this->set_special)
+            static::$customfputcsv->invokeArgs($this, $this->getFputcsvParameters($row));
+        else
+            static::$fputcsv->invokeArgs($this->csv, $this->getFputcsvParameters($row));
         if ("\n" !== $this->newline) {
             $this->csv->fseek(-1, SEEK_CUR);
             $this->csv->fwrite($this->newline);
@@ -131,7 +155,34 @@ class Writer extends AbstractCsv
         return $this;
     }
 
-    /**
+    public function customFputcsv(array $fields, $delimiter = ',', $enclosure = '"', $escape = '\\' ) {
+        $delimiter_esc = preg_quote($delimiter, '/');
+        $enclosure_esc = preg_quote($enclosure, '/');
+
+        $output = array();
+        foreach ($fields as $field) {
+            if ($field === null) {
+                continue;
+            }
+
+            //|| $field != strip_tags($field)
+        $output[] = preg_match("/(?:${delimiter_esc}|${enclosure_esc})|\<br\>|\<b\>/", $field) || strstr($field, "\n")  ? (
+        $enclosure . str_replace($enclosure, $enclosure . $enclosure, $field) . $enclosure) : $field;
+    }
+
+        $this->csv->fwrite(join($delimiter, $output)."\n");
+ }
+
+    public function setSpecial($bool){
+        $this->set_special = $bool;
+    }
+
+    public function getSpecial(){
+        return $this->set_special;
+    }
+
+
+/**
      * returns the parameters for SplFileObject::fputcsv
      *
      * @param  array $fields The fields to be add

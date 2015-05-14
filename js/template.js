@@ -90,4 +90,16 @@ $(function()
 
         return true;
     });
+
+
+    $('#conversion_form').on('validate.bs.validator', function(e){
+                if ($('#previous_file').val().length === 0 && $('#new_file').val().length === 0) {
+                    console.log('passed');
+                    e.preventDefault();
+                    return false;
+                }
+                else
+                    return true;
+        });
+
 });

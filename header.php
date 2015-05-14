@@ -40,15 +40,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Csv Converter</a>
+            <a class="navbar-brand" href="#"><i class="glyphicon glyphicon-retweet"></i> Csv Converter</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li <?php if($main_page == 'index') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'index')? '#' : 'index.php' ?>">Home</a></li>
-                <li <?php if($main_page == 'templates') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'templates')? '#' : 'templates.php' ?>">Templates</a></li>
-                <li <?php if($main_page == 'conversion') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'conversion')? '#' : 'conversion.php' ?>">Conversioni</a></li>
-                <li <?php if($main_page == 'impostazioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'impostazioni')? '#' : 'impostazioni.php' ?>">Impostazioni</a></li>
-                <li <?php if($main_page == 'istruzioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'istruzioni')? '#' : 'istruzioni.php' ?>">Istruzioni</a></li>
+                <li <?php if($main_page == 'index') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'index')? '#' : 'index.php' ?>"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                <li <?php if($main_page == 'templates') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'templates')? '#' : 'templates.php' ?>"><i class="glyphicon glyphicon-list"></i> Templates</a></li>
+                <li <?php if($main_page == 'conversion') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'conversion')? '#' : 'conversion.php' ?>"><i class="glyphicon glyphicon-bullhorn"></i> Conversioni</a></li>
+                <li <?php if($main_page == 'impostazioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'impostazioni')? '#' : 'impostazioni.php' ?>"><i class="glyphicon glyphicon-cog"></i> Impostazioni</a></li>
+                <li <?php if($main_page == 'istruzioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'istruzioni')? '#' : 'istruzioni.php' ?>"><i class="glyphicon glyphicon-list"></i> Istruzioni</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
