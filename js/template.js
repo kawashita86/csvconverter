@@ -48,32 +48,27 @@ $(function()
         var entry = $(this).parents('.entry');
         var current_type = $(this).val();
         if(current_type == '5') {
-            entry.find('.hide-fixed input').attr('placeholder', 'Inserisci valore');
-            entry.find('.hide-conversion').hide();
+           entry.find('.hide-fixed input').attr('placeholder', 'Inserisci valore');
+           entry.find('.hide-fixed label').text('Valore Fisso');
            entry.find('.formatting-extension').hide();
            entry.find('.hide-fixed').show();
        } else if(current_type == '6') {
             entry.find('.hide-fixed input').attr('placeholder', 'Colonne separate da ,');
-            entry.find('.hide-conversion').hide();
+            entry.find('.hide-fixed label').text('Concatenazione');
             entry.find('.formatting-extension').hide();
             entry.find('.hide-fixed').show();
         } else if(current_type == 4){
             entry.find('.formatting-extension').hide();
             entry.find('.quantity-extension').show();
-            entry.find('.hide-fixed').hide();
-            entry.find('.hide-conversion').show();
 
         } else if(current_type == 2 || current_type == 7){
             entry.find('.formatting-extension').hide();
             entry.find('.price-extension').show();
-            entry.find('.hide-fixed').hide();
-            entry.find('.hide-conversion').show();
         }
         else
         {
             entry.find('.formatting-extension').hide();
             entry.find('.hide-fixed').hide();
-            entry.find('.hide-conversion').show();
         }
     });
 

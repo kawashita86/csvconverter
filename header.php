@@ -29,7 +29,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body  data-spy="scroll" data-target=".scrollspy" >
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
                 <li <?php if($main_page == 'templates') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'templates')? '#' : 'templates.php' ?>"><i class="glyphicon glyphicon-list"></i> Templates</a></li>
                 <li <?php if($main_page == 'conversion') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'conversion')? '#' : 'conversion.php' ?>"><i class="glyphicon glyphicon-bullhorn"></i> Conversioni</a></li>
                 <li <?php if($main_page == 'impostazioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'impostazioni')? '#' : 'impostazioni.php' ?>"><i class="glyphicon glyphicon-cog"></i> Impostazioni</a></li>
-                <li <?php if($main_page == 'istruzioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'istruzioni')? '#' : 'istruzioni.php' ?>"><i class="glyphicon glyphicon-list"></i> Istruzioni</a></li>
+                <li <?php if($main_page == 'istruzioni') { echo 'class="active"';} ?>><a href="<?php echo ($main_page == 'istruzioni')? '#' : 'istruzioni.php' ?>"><i class="glyphicon glyphicon-book"></i> Istruzioni</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

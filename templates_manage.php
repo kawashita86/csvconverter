@@ -92,13 +92,13 @@ include_once('header.php');
                                     <input type="hidden" name="cell_id[]" value="<?php echo $c['id_cell'] ?>"/>
                                     <label for="cell_name[]" class="col-md-1 control-label">Nome</label>
 
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <input type="text" class="form-control" placeholder="Name"
                                                name="cell_name[]" value="<?php echo stripslashes($c['name']) ?>">
                                     </div>
                                     <label for="cell_formatting[]" class="col-md-1 control-label">Tipo</label>
 
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <select class="form-control"  name="cell_formatting[]">
                                             <option value=""> - Scegli</option>
                                             <?php foreach ($cell_type as $type)
@@ -113,19 +113,6 @@ include_once('header.php');
                                                name="cell_position[]" value="<?php echo $c['position'] ?>">
                                     </div>
                                     <div class="col-md-2">
-                                       <span class="hide-conversion" <?php echo $c['id_type'] == 5 || $c['id_type'] == 6  ? 'style="display:none"': '' ?>>
-                                     <!--   <select class="form-control" name="special_conversion[]">
-                                            <option value=""> - Scegli</option>
-                                            <?php //foreach ($cell_conversion as $type)
-                                             //   echo '<option value="' . $type['id_cell_conversion'] . '" ' . ($c['id_conversion'] == $type['id_cell_conversion'] ? 'selected' : '') . '>' . $type['name'] . '</option>';
-                                            ?>
-                                        </select>-->
-                                        </span>
-                                        <span class="hide-fixed" <?php echo $c['id_type'] != 5 && $c['id_type'] != 6 ? 'style="display:none"': '' ?>>
-                                            <input type="text" value="<?php echo $c['fixed_value'] ?>" name="special_value[]" class="form-control" placeholder="Inserisci valore" />
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2">
                                         <button class="btn btn-info btn-up" type="button">
                                             <span class="glyphicon glyphicon-arrow-up"></span>
                                         </button>
@@ -135,6 +122,17 @@ include_once('header.php');
                                         <button class="btn btn-danger btn-remove" type="button">
                                             <span class="glyphicon glyphicon-minus"></span>
                                         </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 formatting-extension hide-fixed" <?php echo $c['id_type'] != 5 && $c['id_type'] != 6 ? 'style="display:none"': '' ?>>
+                                <div class="form-group row">
+                                    <div class="col-md-2 col-md-offset-1">
+                                        <span class="label label-info">Impostazioni avanzate</span>
+                                    </div>
+                                    <label for="cell_name[]" class="col-md-2 control-label"><?php echo $c['id_type'] == 6 ? 'Concatenazione' : 'Valore Fisso'; ?></label>
+                                    <div class="col-md-3">
+                                        <input type="text" value="<?php echo $c['fixed_value'] ?>" name="special_value[]" class="form-control" placeholder="Inserisci valore" />
                                     </div>
                                 </div>
                             </div>
@@ -190,11 +188,11 @@ include_once('header.php');
                         <div class="form-group row">
                             <input type="hidden" name="cell_id[]" value="" />
                             <label for="cell_name[]" class="col-md-1 control-label">Nome</label>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" placeholder="Name" name="cell_name[]">
                             </div>
                             <label for="cell_formatting[]" class="col-md-1 control-label">Tipo</label>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <select class="form-control" name="cell_formatting[]" >
                                     <option value=""> - Scegli </option>
                                     <?php foreach($cell_type as $type)
@@ -207,19 +205,6 @@ include_once('header.php');
                                 <input type="number" class="form-control" placeholder="0" name="cell_position[]">
                             </div>
                             <div class="col-md-2">
-                                <span class="hide-conversion">
-                                  <!--  <select class="form-control" name="special_conversion[]">
-                                    <option value=""> - Scegli</option>
-                                    <?php //foreach($cell_conversion as $type)
-                                       // echo '<option value="'.$type['id_cell_conversion'].'">'.$type['name'].'</option>';
-                                    ?>
-                                    </select>-->
-                                </span>
-                                <span class="hide-fixed" style="display:none">
-                                    <input type="text" value="" name="special_value[]" class="form-control" placeholder="Inserisci valore" />
-                                </span>
-                            </div>
-                            <div class="col-md-2">
                                 <button class="btn btn-info btn-up" type="button">
                                     <span class="glyphicon glyphicon-arrow-up"></span>
                                 </button>
@@ -229,6 +214,17 @@ include_once('header.php');
                                 <button class="btn btn-success btn-add" type="button">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 formatting-extension hide-fixed" style="display:none;">
+                        <div class="form-group row">
+                            <div class="col-md-2 col-md-offset-1">
+                                <span class="label label-info">Impostazioni avanzate</span>
+                            </div>
+                            <label for="cell_name[]" class="col-md-2 control-label">Valore Fisso</label>
+                            <div class="col-md-3">
+                                <input type="text" value="" name="special_value[]" class="form-control" placeholder="Inserisci valore" />
                             </div>
                         </div>
                     </div>
