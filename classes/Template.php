@@ -7,6 +7,7 @@ class Template extends ObjectModel {
     public $text_container;
     public $description;
     public $concatenation_char;
+    public $set_bom;
     public $cells;
 
     /**
@@ -21,7 +22,8 @@ class Template extends ObjectModel {
             'line_header' => array('type' => self::TYPE_INT),
             'text_container' => array('type' => self::TYPE_STRING),
             'description' => array('type' => self::TYPE_STRING),
-            'concatenation_char' => array('type' => self::TYPE_STRING)
+            'concatenation_char' => array('type' => self::TYPE_STRING),
+            'set_bom' => array('type' => self::TYPE_INT)
         ),
     );
 

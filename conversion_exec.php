@@ -43,21 +43,34 @@ if(isset($filename) && !empty($filename)){
     }
 
     $csv = Writer::createFromFileObject(new SplTempFileObject());
+    //set csv separator character
     if($template->separator == '\t' || $template->separator == 't')
         $csv->setDelimiter("\t");
     else
         $csv->setDelimiter($template->separator);
 
+    //set default new line character
     $csv->setNewline("\r\n");
 
+    //set default escape
     $csv->setEscape('\\');
-    $csv->setOutputBOM(Writer::BOM_UTF8);
-    $csv->insertOne($cell_title);
+
+    //set bom character for output
+   if($template->set_bom == 1)
+       $csv->setOutputBOM(Writer::BOM_UTF8);
+
+    //manage header of file
+    if($template->line_header == 1)
+        $csv->insertOne($cell_title);
+
+    //manage special field encapsulation for enclosure
     if(empty($template->text_container) || $template->text_container == 'n') {
         $csv->setSpecial(true);
     }
     else
         $csv->setEnclosure(stripslashes($template->text_container));
+
+    //insert the converted csv in the file
     $csv->insertAll($data);
 
     if(Tools::getValue('file_type') == 'txt') {

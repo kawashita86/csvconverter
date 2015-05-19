@@ -33,7 +33,7 @@ define('_LOG_PERSIST_ON_DB_', false);
 define('_LOG_FILE_MIN_SEVERITY_', 7);
 define('_LOG_FILE_PATH_TEST_', _ROOT_DIR_."/log/");
 
-define('_LOGS_BY_EMAIL_', 1);
+define('_LOGS_BY_EMAIL_', 0);
 
 define('_DB_PATH_', _STORAGE_DIR_.'/csvdb.db');
 define('_DB_SERVER_', _STORAGE_DIR_.'/csvdb.db');

@@ -11,6 +11,7 @@ if(Tools::getValue('submitTemplate')){
         $template->separator = Tools::getValue('separator');
         $template->text_container = Tools::getValue('text_container');
         $template->concatenation_char = Tools::getValue('concatenation_char');
+        $template->set_bom =  Tools::getValue('set_bom');
         if($template->update())
             $template->updateCell($_POST);
         else
@@ -23,6 +24,7 @@ if(Tools::getValue('submitTemplate')){
         $template->separator = Tools::getValue('separator');
         $template->text_container = Tools::getValue('text_container');
         $template->concatenation_char = Tools::getValue('concatenation_char');
+        $template->set_bom =  Tools::getValue('set_bom');
         if($template->add())
             $template->updateCell($_POST);
         else

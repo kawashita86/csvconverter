@@ -10,6 +10,7 @@ class Controller {
     public $smarty;
     public $page_name;
     public $page_title;
+    public $isLogged = false;
     public $php_self;
     public $page_icon;
     public $profile;
@@ -53,64 +54,6 @@ class Controller {
         $this->display();
     }
 
-    public function initHeader($user){
-        global $link;
-        $tabs = Tab::getTabs(0);
-        $current_id = Tab::getCurrentParentId();
-        foreach ($tabs as $index => $tab)
-        {
-            if (!Tab::checkTabRights($tab['id_tab'], $this->profile['id_profile']))
-            {
-                unset($tabs[$index]);
-                continue;
-            }
-
-
-            // tab[class_name] does not contains the "Controller" suffix
-            $tabs[$index]['current'] = ($tab['class_name'].'Controller' == get_class($this)) || ($current_id == $tab['id_tab']);
-            $tabs[$index]['icon'] = $tab['icon'];
-            $tabs[$index]['href'] = $link->getPageLink($tab['class_name']);
-
-            $sub_tabs = Tab::getTabs($tab['id_tab']);
-            foreach ($sub_tabs as $index2 => $sub_tab)
-            {
-
-                if (Tab::checkTabRights($sub_tab['id_tab'], $this->profile['id_profile']) === true && (bool)$sub_tab['active'])
-                    // class_name is the name of the class controller
-                {
-                    $sub_tabs[$index2]['href'] = $link->getPageLink($sub_tab['class_name']);
-                    $sub_tabs[$index2]['current'] = ($sub_tab['class_name'].'Controller' == get_class($this)) || ($sub_tab['class_name'] == Tools::getValue('controller'));
-                }
-                else
-                    unset($sub_tabs[$index2]);
-            }
-
-            if($tabs[$index]['class_name'] == 'MyNetworks'){
-                //get server list and add it to the system
-                if($this->profile['id_profile'] == _ADMIN_PROFILE_  || (isset($user['permissions']) && !empty($user['permissions']))) {
-                    $server_tabs = Tab::getServerTab();
-                    foreach ($server_tabs as $sub_tab) {
-                       if($this->profile['id_profile'] == _ADMIN_PROFILE_  || in_array($sub_tab['name'], $user['permissions'])) {
-                           $sub_tab['id_parent'] = $index;
-                           $sub_tab['id_tab'] = 15;
-                           $sub_tab['href'] = $link->getPageLink($sub_tab['class_name'], false, 'id=' . $sub_tab['id']);
-                           $sub_tab['current'] = ($sub_tab['class_name'] . 'Controller' == get_class($this)) && Tools::getValue('id') == $sub_tab['id'];
-                           $sub_tabs[] = $sub_tab;
-                       }
-                    }
-                }
-            }
-
-            $tabs[$index]['sub_tabs'] = $sub_tabs;
-        }
-
-        $this->smarty->assign(array(
-            'current_parent_id' => (int)Tab::getCurrentParentId(),
-            'tabs' => $tabs,
-            'permissions' => Tab::getTabs()
-        ));
-    }
-
     public function init() {
 
         global $useSSL, $cookie, $smarty, $protocol_link, $protocol_content, $link, $css_files, $js_files;
@@ -150,33 +93,12 @@ class Controller {
             $this->page_icon = '';
         $this->smarty->assign('request_uri', Tools::safeOutput(urldecode($_SERVER['REQUEST_URI'])));
 
-        if (isset($_COOKIE['apiset']))
-            $this->smarty->assign('apiset', $_COOKIE['apiset']);
-        
-       if(isset($_COOKIE['token']) || isset($_COOKIE['user'])){
-            $user = Tools::jsonDecode($_COOKIE['user'], true);
-           //setup the profile id
-            if(!empty($user['role']))
-                $this->profile = Profile::getProfileFromLDAPRole($user['role'][0]);
-            if($user['role'][0] == 'Super Admin' || $user['role'][0] == 'admin' || $user['role'][0] == 'superadmin')
-                $this->smarty->assign('allowbuy', 'true');
-            else
-                $this->smarty->assign('allowbuy', 'false');
-         //   $this->smarty->assign('menu_list', $this->access_list);
-            $this->smarty->assign('token', $_COOKIE['token']);
-
-           //lets try to call the funciont
-          $this->initHeader($user);
-       }
-
-        if(isset($_COOKIE['navcollapse'])){
-            $this->smarty->assign('navcollapse', $_COOKIE['navcollapse']);
-        }
+        if(isset($_COOKIE['csv_user']))
+            $this->isLogged = true;
 
         $this->smarty->assign(array(
             'link' => $link,
             'page_name' => $page_name,
-            'project_name' => _PROJECT_NAME_,
             'page_title' => $page_title,
             'page_icon' => $this->page_icon,
             'base_dir' => __BASE_URI__,
@@ -204,16 +126,6 @@ class Controller {
     }
 
     public function display() {
-        // assign css_files and js_files at the very last time
-        if ((CSS_THEME_CACHE || JS_THEME_CACHE) && is_writable(_ROOT_DIR_.'/cache'))
-        {
-            // CSS compressor management
-            if (CSS_THEME_CACHE)
-                $this->css_files = Media::cccCSS($this->css_files);
-            //JS compressor management
-            if (JS_THEME_CACHE)
-                $this->js_files = Media::cccJs($this->js_files);
-        }
 
         $this->smarty->assign('css_files', $this->css_files);
         $this->smarty->assign('js_files', array_unique($this->js_files));
@@ -252,18 +164,10 @@ class Controller {
     }
 
     public function viewAccess() {
-        global $link;
-        if(isset($_COOKIE['user'])){
-            $given_tab = Tab::getIdFromClassName(str_replace('Controller', '', get_class($this)));
-            if (Tab::checkTabRights($given_tab, $this->profile['id_profile']))
+       if(isset($_COOKIE['csv_user'])){
                 return true;
-
-            $tabs = Tab::getTabs();
-            foreach($tabs as $tab)
-                if (!Tab::checkTabRights($tab['id_tab'], $this->profile['id_profile']))
-                     Tools::redirect($link->getPageLink($tab['class_name']));
         } else {
-            header('Location: /index.php');
+            header('Location: index.php');
         }
     }
 

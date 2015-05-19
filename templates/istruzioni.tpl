@@ -1,18 +1,13 @@
-<?php
-include_once('config/config.php');
-
-$main_page = 'istruzioni';
-include_once('header.php');
-?>
+{include file="header.tpl" title=header}
 <div id="top" ></div>
-    <!--    <div class="col-sm-9 col-md-10 main"> -->
+<!--    <div class="col-sm-9 col-md-10 main"> -->
 <div class="container theme-showcase" role="main">
     <div class="page-header">
         <h3>Istruzioni</h3>
     </div>
     <div class="row">
-            <div class="col-sm-3 col-md-3 sidebar scrollspy" role="complementary">
-                <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm"  >
+        <div class="col-sm-3 col-md-3 sidebar scrollspy" role="complementary">
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm"  >
                 <ul class="nav bs-docs-sidenav" id="menu" >
                     <li>
                         <a href="#js-templates"><i class="glyphicon glyphicon-list"></i> Templates</a>
@@ -35,11 +30,11 @@ include_once('header.php');
                         </a>
 
                 </ul>
-                    <a class="back-to-top" href="#top">
+                <a class="back-to-top" href="#top">
                     Back to top
-                    </a>
-                </nav>
-            </div>
+                </a>
+            </nav>
+        </div>
         <div class="col-sm-9 col-md-9 main">
             <div class="bs-docs-section">
                 <h1 id="js-templates" class="page-header">
@@ -49,7 +44,7 @@ include_once('header.php');
                     </a>
                 </h1>
                 <h2 id="js-list">
-                   Lista
+                    Lista
                     <a class="anchorjs-link" href="#js-list">
                         <span class="anchorjs-icon"></span>
                     </a>
@@ -205,8 +200,8 @@ include_once('header.php');
                     </a>
                 </h1>
                 <p>Questa pagina permette di convertire un file di partenza in un file di destinazione secondo le regole specificate all'interno di un template precedentemente salvato.
-                   Nel form di conversione vengono offerte diverse opzioni per personalizzare la conversione secondo le necessità.<br/>
-                   Una volta selezionate le impostazioni desiderate è sufficiente premere il bottone "Converti" ed attendere che la procedura venga eseguita, al termine verrà aperta una finestra con il file da scaricare sul vostro pc.
+                    Nel form di conversione vengono offerte diverse opzioni per personalizzare la conversione secondo le necessità.<br/>
+                    Una volta selezionate le impostazioni desiderate è sufficiente premere il bottone "Converti" ed attendere che la procedura venga eseguita, al termine verrà aperta una finestra con il file da scaricare sul vostro pc.
                     <br/>Qui in seguito vengono elencati i campi presenti nel form con una descrizione delle funzionalità.
                 </p>
                 <div id="callout-conversion-type" class="bs-callout bs-callout-info">
@@ -223,9 +218,9 @@ include_once('header.php');
                         <dt>File caricati precedentemente</dt><dd>Una <code>select</code> che mostra l'ultimo/i file caricato. può essere utile nel caso si desideri convertire lo stesso file con più template senza effettuare ogni volta l'upload.</dd>
                     </dl>
                 </div>
-                   <div class="alert alert-danger">
-                       <b>N.b.</b> Dopo aver caricato un file tramite l'input "Carica un File" è necessario aggiornare la pagina perchè venga visualizzato all'interno della select "File caricati precedentemente".
-                   </div>
+                <div class="alert alert-danger">
+                    <b>N.b.</b> Dopo aver caricato un file tramite l'input "Carica un File" è necessario aggiornare la pagina perchè venga visualizzato all'interno della select "File caricati precedentemente".
+                </div>
                 <h1 id="js-impostazioni" class="page-header">
                     Impostazioni
                     <a class="anchorjs-link" href="#js-impostazioni">
@@ -245,22 +240,24 @@ include_once('header.php');
                         <dt>Separatore di righe</dt><dd>Quale carattere di nuova riga è utilizzato nel file da importare? Lasciare il campo di default salvo errate conversioni</dd>
                     </dl>
                 </div>
-    </div>
-</div>
+            </div>
+        </div>
     </div></div>
-<?php include_once('footer.php'); ?>
+{include file="footer.tpl" title=footer}
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
 <script src="js/template.js"></script>
 <script>
+    {literal}
     $('.bs-docs-sidebar').affix({
         offset: {
             top: 0,
             bottom: 60
         }
-    })
+    });
+    {/literal}
 </script>
 </body>
 </html>

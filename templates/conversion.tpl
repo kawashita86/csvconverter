@@ -1,13 +1,4 @@
-<?php
-include_once('config/config.php');
-
-$main_page = 'conversion';
-$templates = Template::getAll();
-
-$files = preg_grep('~\.(csv|txt)$~', scandir('import'));
-
-include_once('header.php');
-?>
+{include file="header.tpl" title=header}
 <div class="container theme-showcase" role="main">
     <div class="page-header">
         <h3>Converti CSV</h3>
@@ -20,18 +11,19 @@ include_once('header.php');
                     <div class="col-md-8">
                         <select class="form-control" id="template_name" name="template_name" required>
                             <option value="">Scegli il template</option>
-                            <?php if(!empty($templates)){
-                                foreach($templates as $template){ ?>
-                                <option value="<?php echo $template['id_template'] ?>"><?php echo $template['name'] ?></option>
-                            <?php } }?>
+                            {if !empty($templates)}
+                                {foreach $templates as $template}
+                            <option value="{$template.id_template}">{$template.name}</option>
+                                {/foreach}
+                            {/if}
                         </select>
                     </div>
 
                     <div class="col-md-1">
-                            <a class="btn btn-success btn-add" href="templates_manage.php">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </div>
+                        <a class="btn btn-success btn-add" href="{$link->getPageLink('templates-manage')}">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="separator" class="col-md-3 control-label">Formato file</label>
@@ -65,17 +57,19 @@ include_once('header.php');
                 <div class="form-group">
                     <label for="previous_file" class="col-md-3 control-label" >File caricati precedentemente</label>
                     <div class="col-md-9">
-                       <select name="previous_files" id="previous_file" class="form-control" >
-                           <option value=""> Scegli</option>
-                           <?php foreach($files as $file){
-                              echo '<option value="'.$file.'">'.$file.'</option>';
-                           } ?>
-                       </select>
+                        <select name="previous_files" id="previous_file" class="form-control" >
+                            <option value=""> Scegli</option>
+                            {if !empty($files)}
+                            {foreach $files as $file}
+                              <option value="{$file}">{$file}</option>
+                            {/foreach}
+                            {/if}
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-11 col-md-offset-1">
-                        <a class="btn btn-default" href="index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+                        <a class="btn btn-default" href="{$link->getPageLink('index')}"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
                         <input type="submit" class="btn btn-info" name="submitConversion" value="Converti">
                     </div>
                 </div>
@@ -85,7 +79,7 @@ include_once('header.php');
 
 </div><!-- /.container -->
 
-<?php include_once('footer.php'); ?>
+{include file="footer.tpl" title=footer}
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>

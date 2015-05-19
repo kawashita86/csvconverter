@@ -14,12 +14,12 @@
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
     <!-- Bootstrap core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="../css/dataTables.bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/base.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/sb-admin-2.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

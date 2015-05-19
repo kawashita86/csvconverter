@@ -37,8 +37,8 @@ include_once('header.php');
                         <td><?php echo $template['name'] ?></td>
                         <td><?php echo $template['description'] ?></td>
                         <td>
-                            <a href="templates_manage.php?id_template=<?php echo $template['id_template'];?>" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> Modifica</a>
-                            <a href="save_template.php?deleteTemplate=1&id_template=<?php echo $template['id_template'];?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancella</a>
+                            <a href="../templates_manage.php?id_template=<?php echo $template['id_template'];?>" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> Modifica</a>
+                            <a href="../save_template.php?deleteTemplate=1&id_template=<?php echo $template['id_template'];?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancella</a>
                         </td>
                      </tr>
                 <?php } ?>
@@ -46,18 +46,18 @@ include_once('header.php');
     </table>
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
-            <a href="templates_manage.php" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
+            <a class="btn btn-default" href="../index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+            <a href="../templates_manage.php" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
         </div>
     </div>
 </div><!-- /.container -->
 
 <?php include_once('footer.php'); ?>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
-<script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-<script src="js/template.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/bootstrap-validator/dist/validator.min.js"></script>
+<script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../js/template.js"></script>
 <script type="text/javascript">
     var oTable;
     $(document).ready(function () {

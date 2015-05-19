@@ -72,7 +72,7 @@ $(function()
         }
     });
 
-    $('#template_form').on('validated.bs.validator', function(){
+   /* $('#template_form').on('validated.bs.validator', function(){
         $('.check_no_negative').each(function(){
            if($(this).parent().find('input[type=checkbox]').is(':checked') == true)
                 $(this).attr('disabled', true);
@@ -84,7 +84,7 @@ $(function()
         });
 
         return true;
-    });
+    });*/
 
 
     $('#conversion_form').on('validate.bs.validator', function(e){

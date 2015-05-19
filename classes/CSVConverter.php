@@ -27,7 +27,7 @@ class CSVConverter
     public static function getValidatedRow($row, $validators){
         $new_row = array();
         foreach($validators as $key => $validator){
-           if($validator['type'] != null) {
+           if($validator['type'] != null && isset($row[$validator['position']])) {
                $new_row[(int)$key] =
                    CSVConverter::$validator['type']($row,$validator['position'], $validator['fixed_value'], $validator['concatenation_char'], $validator['extra_action'], $validator['extra_action_1']);
            }

@@ -18,7 +18,7 @@ include_once('header.php');
     </div>
     <div class="row">
         <div class="col-md-12 template-form-container">
-            <form class="form-horizontal" role="form" data-toggle="validator" id="template_form" autocomplete="off" action="save_template.php" method="post">
+            <form class="form-horizontal" role="form" id="template_form" autocomplete="off" action="save_template.php" method="post">
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Dettagli Template</legend>
                 <div class="form-group">
@@ -57,6 +57,16 @@ include_once('header.php');
                         <p class="help-block">numero di righe che compongono l'intestazione del csv.</p>
                     </div>
                 </div>
+                    <div class="form-group">
+                        <label for="set_bom" class="col-md-2 control-label">Codifica BOM</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="set_bom" name="set_bom" >
+                                <option value="1" <?php echo (isset($template) && $template->set_bom == "1")? 'selected' : ''; ?>>Si</option>
+                                <option value='0' <?php echo (isset($template) && $template->set_bom == '0')? 'selected' : ''; ?>>No</option>
+                            </select>
+                            <p class="help-block">Se desideri utilizzare la codifica Byte Order Mark (BOM).</p>
+                        </div>
+                    </div>
                 <div class="form-group">
                     <label for="text_container" class="col-md-2 control-label">Contenitore testo</label>
                     <div class="col-md-10">
@@ -69,7 +79,7 @@ include_once('header.php');
                     </div>
                 </div>
                     <div class="form-group">
-                        <label for="text_container" class="col-md-2 control-label">Carattere concatenzione</label>
+                        <label for="concatenation_char" class="col-md-2 control-label">Carattere concatenzione</label>
                         <div class="col-md-10">
                             <select class="form-control" id="concatenation_char" name="concatenation_char" >
                                 <option value="n" <?php echo (isset($template) && $template->concatenation_char == "n")? 'selected' : ''; ?>>Nessuno</option>
@@ -150,11 +160,12 @@ include_once('header.php');
                                             <option value="4" <?php echo ($c['price_round'] == 4 ? 'selected' : ''); ?>>4</option>
                                         </select>
                                     </div>
-                                    <div class="checkbox col-md-3 col-md-offset-1">
-                                        <label for="">
-                                            <input type="checkbox" name="strip_element[]" value="1" <?php echo ($c['strip_element'] == 1 ? 'checked' : ''); ?>/> Elimina carattere ¤
-                                        </label>
-                                        <input class='check_strip_element'  type='hidden' value='0' name='strip_element[]'>
+                                    <label for="" class="col-md-2 control-label">Elimina carattere ¤</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="strip_element[]" >
+                                            <option value="0" >No</option>
+                                            <option value="1" <?php echo ($c['strip_element'] == 1 ? 'selected' : ''); ?>>Si</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -170,11 +181,12 @@ include_once('header.php');
                                             <option value="1" <?php echo ($c['quantity_round'] == 1 ? 'selected' : ''); ?>>Superiore</option>
                                         </select>
                                     </div>
-                                    <div class="checkbox col-md-3 col-md-offset-1">
-                                        <label for="" >
-                                            <input type="checkbox" name="no_negative[]" value="1" <?php echo ($c['no_negative'] == 1 ? 'checked' : ''); ?>/> Valori negativi a 0
-                                        </label>
-                                        <input class='check_no_negative'  type='hidden' value='0' name='no_negative[]'>
+                                    <label for="" class="col-md-2 control-label">Valori negativi a 0</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="no_negative[]" >
+                                            <option value="0" >No</option>
+                                            <option value="1" <?php echo ($c['no_negative'] == 1 ? 'selected' : ''); ?>>Si</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -242,12 +254,12 @@ include_once('header.php');
                                     <option value="4">4</option>
                                 </select>
                             </div>
-                            <div class="checkbox col-md-3 col-md-offset-1">
-                            <label for="">
-                                <input type="checkbox" name="strip_element[]" value="1"/> Elimina carattere ¤
-                            </label>
-                            <input class='check_strip_element'  type='hidden' value='0' name='strip_element[]'>
-
+                            <label for="" class="col-md-2 control-label">Elimina carattere ¤</label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="strip_element[]" >
+                                    <option value="0" >No</option>
+                                    <option value="1" >Si</option>
+                                </select>
                             </div>
                     </div>
                 </div>
@@ -263,12 +275,12 @@ include_once('header.php');
                                     <option value="1">Superiore</option>
                                 </select>
                             </div>
-                            <div class="checkbox col-md-3 col-md-offset-1">
-                                <label for="no_negative[]" >
-                                    <input type="checkbox" name="no_negative[]" value="1"/> Valori negativi a 0
-                                </label>
-                                <input class='check_no_negative'  type='hidden' value='0' name='no_negative[]'>
-
+                            <label for="" class="col-md-2 control-label">Valori negativi a 0</label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="no_negative[]" >
+                                    <option value="0" >No</option>
+                                    <option value="1" >Si</option>
+                                </select>
                             </div>
                         </div>
                     </div>

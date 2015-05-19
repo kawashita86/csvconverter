@@ -53,18 +53,18 @@ define('_PROJECT_NAME_', $project_name[0]);
 define('__BASE_URI__', $base_uri);
 define('_BASE_URL_', $base_uri);
 define('_JS_DIR_', _ROOT_DIR_.'/js/');
-define('_CSS_DIR_', _ROOT_DIR_.'/style/');
+define('_CSS_DIR_', _ROOT_DIR_.'/css/');
 define('_IMG_DIR_', _ROOT_DIR_.'/img/');
 
 $https_link = (Tools::usingSecureMode() && _SSL_ENABLED_) ? 'https://' : 'http://';
 $protocol_link = (_SSL_ENABLED_) ? 'https://' : 'http://';
 $protocol_content = (isset($useSSL) AND $useSSL AND _SSL_ENABLED_) ? 'https://' : 'http://';
         
-//require_once(_ROOT_DIR_.'/libs/Smarty.class.php');
+require_once(_ROOT_DIR_.'/libs/Smarty.class.php');
 
-/*$smarty = new Smarty;
+$smarty = new Smarty;
 
-$smarty->force_compile = true;
+$smarty->force_compile = false;
 if(Tools::getValue('SMARTY_DEBUG'))
     $smarty->debugging = true;
 else
@@ -72,13 +72,5 @@ else
 $smarty->caching = false;
 $smarty->cache_lifetime = 120;
 
-$smarty->registerPlugin("function", 'byte_to_size', 'print_date_conversion');*/
-
-function print_date_conversion($params, &$smarty)
-{
-	if(!empty($params['bytes'])){
-		return Tools::bytesToSize($params['bytes']);
-	}
-}
 
 ?>

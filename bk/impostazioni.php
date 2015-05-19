@@ -23,7 +23,7 @@ include_once('header.php');
     </div>
     <div class="row">
             <div class="col-md-12 template-form-container">
-                <form class="form-horizontal" role="form" data-toggle="validator" id="setting_form" autocomplete="off" action="save_impostazioni.php" method="post">
+                <form class="form-horizontal" role="form" data-toggle="validator" id="setting_form" autocomplete="off" action="../save_impostazioni.php" method="post">
                     <div class="form-group">
                         <label for="HEADER_LINE" class="col-md-2 control-label">Formato File Importato</label>
                         <div class="col-md-10">
@@ -81,7 +81,7 @@ include_once('header.php');
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <a class="btn btn-default" href="index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+                        <a class="btn btn-default" href="../index.php" ><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
                         <input type="submit" value="Aggiorna" name="updateImpostazioni" class="btn btn-info" />
                     </div>
                 </form>
@@ -90,9 +90,9 @@ include_once('header.php');
 </div><!-- /.container -->
 <?php include_once('footer.php'); ?>
 
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
-<script src="js/template.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/bootstrap-validator/dist/validator.min.js"></script>
+<script src="../js/template.js"></script>
 </body>
 </html>
